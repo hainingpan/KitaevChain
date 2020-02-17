@@ -1,0 +1,19 @@
+t=1;
+Delta=1;
+delta=1e-3;
+mulist=linspace(-3,3,60);
+energylist=linspace(-2*t,2*t,10);
+n=100;
+ldosmap=zeros(length(mulist),length(energylist),n);
+lenmu=length(mulist);
+lenenergy=length(energylist);
+for i=1:lenmu
+    for j=1:lenenergy
+    mu=mulist(i);
+    energy=energylist(j);
+    ldosmap(i,j,:)=ldosall(mu,t,Delta,n,energy,delta);
+    end
+end
+
+figure;
+surf(mulist,energylist,ldosmap(:,:,1),'edgecolor','none');
