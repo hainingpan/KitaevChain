@@ -28,7 +28,7 @@ line([t/Delta*2,t/Delta*2],[-2,2],'Color','r');
 title(strcat('Energy [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),']'));
 fn_t=strcat('t',num2str(t));
 fn_Delta=strcat('D',num2str(Delta));
-fn_tVar=strcat('muVar',num2str(tVar));
+fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar);
 saveas(gcf,strcat(fn,'.png'));
 save(strcat(fn,'_',num2str(mulist(end)),'.txt'),'en','-ascii');
