@@ -31,5 +31,5 @@ fn_Delta=strcat('D',num2str(Delta));
 fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar);
 saveas(gcf,strcat(fn,'.png'));
-save(strcat(fn,'_',num2str(mulist(end)),'.txt'),'en','-ascii');
+save(strcat(fn,'_',num2str(mulist(end)),'.dat'),'en','-ascii');
 end
