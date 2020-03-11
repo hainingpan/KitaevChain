@@ -6,7 +6,7 @@ mulist=linspace(0,4*t,201);
 % nv=10;
 % nv=2*n;
 en=zeros(2*n,length(mulist));
-if length(tVar)==1
+if length(tlist)==1
     tlist=t+tVar*randn(n-1,1);
 end
 parfor i=1:length(mulist)

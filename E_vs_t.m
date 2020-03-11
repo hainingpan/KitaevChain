@@ -7,7 +7,7 @@ tlist=linspace(0,2*mu,201);
 % nv=2*n;
 en=zeros(2*n,length(tlist));
 if length(mulist)==1
-    mulist=mu+muVar*randn(n,1);E
+    mulist=mu+muVar*randn(n,1);
 end
 parfor i=1:length(tlist)
     t=tlist(i);
