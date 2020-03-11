@@ -75,5 +75,6 @@ fn=strcat(fn_mu,fn_Delta,fn_muVar,'_DOS');
 saveas(gcf,strcat(fn,'.png'));
 save(strcat(fn,'.dat'),'DOS','-ascii');
 
+fn=strcat(fn_mu,fn_Delta,fn_muVar,'_mulist');
 save(strcat(fn,'.dat'),'mulist','-ascii');
 

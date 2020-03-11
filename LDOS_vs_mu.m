@@ -12,7 +12,6 @@ lenenergy=length(energylist);
 % tVar=1;
 if length(tVar)==1
     tlist=t+tVar*randn(n-1,1);
-    save('tlist.dat','tlist','-ascii');
 end
 parfor i=1:lenmu
     for j=1:lenenergy
@@ -53,9 +52,6 @@ ylabel('E/\Delta');
 xlim([0,mulist(end)/Delta]);
 ylim([-2,2]);
 title(strcat('LDOS in the bulk [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),']'));
-fn_t=strcat('t',num2str(t));
-fn_Delta=strcat('D',num2str(Delta));
-fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar,'_LDOS_M');
 saveas(gcf,strcat(fn,'.png'));
 save(strcat(fn,'.dat'),'LDOS_M','-ascii');
@@ -71,9 +67,6 @@ ylabel('E/\Delta');
 xlim([0,mulist(end)/Delta]);
 ylim([-2,2]);
 title(strcat('LDOS on the right end [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),']'));
-fn_t=strcat('t',num2str(t));
-fn_Delta=strcat('D',num2str(Delta));
-fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar,'_LDOS_R');
 saveas(gcf,strcat(fn,'.png'));
 save(strcat(fn,'.dat'),'LDOS_R','-ascii');
@@ -89,12 +82,10 @@ ylabel('E/\Delta');
 xlim([0,mulist(end)/Delta]);
 ylim([-2,2]);
 title(strcat('DOS [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),']'));
-fn_t=strcat('t',num2str(t));
-fn_Delta=strcat('D',num2str(Delta));
-fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar,'_DOS');
 saveas(gcf,strcat(fn,'.png'));
 save(strcat(fn,'.dat'),'DOS','-ascii');
 
+fn=strcat(fn_t,fn_Delta,fn_tVar,'_tlist');
 save(strcat(fn,'.dat'),'tlist','-ascii');
 
