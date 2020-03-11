@@ -95,3 +95,6 @@ fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar,'_DOS');
 saveas(gcf,strcat(fn,'.png'));
 save(strcat(fn,'.dat'),'DOS','-ascii');
+
+save(strcat(fn,'.dat'),'tlist','-ascii');
+

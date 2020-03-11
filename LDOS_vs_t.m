@@ -11,7 +11,6 @@ lenenergy=length(energylist);
 % muVar=1;
 if length(mulist)==1
     mulist=mu+muVar*randn(n,1);
-    save('mulist.dat','mulist','-ascii');
 end
 
 parfor i=1:lent
@@ -75,3 +74,6 @@ title(strcat('DOS [\mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muV
 fn=strcat(fn_mu,fn_Delta,fn_muVar,'_DOS');
 saveas(gcf,strcat(fn,'.png'));
 save(strcat(fn,'.dat'),'DOS','-ascii');
+
+save(strcat(fn,'.dat'),'mulist','-ascii');
+
