@@ -1,4 +1,4 @@
-function E_vs_mu(t,Delta,tVar,tlist,n)
+function [en,Pf,LE]=E_vs_mu(t,Delta,tVar,tlist,n)
 % t=1;
 % Delta=0.2;
 mulist=linspace(0,4*t,201);
@@ -8,7 +8,12 @@ mulist=linspace(0,4*t,201);
 en=zeros(2*n,length(mulist));
 if length(tlist)==1
     tlist=t+tVar*randn(n-1,1);
+%     tlist=t+tVar*(2*rand(n-1,1)-1);
 end
+Pf=zeros(1,length(mulist));
+LE=zeros(1,length(mulist));
+sy=[1,-1i;1,1i]/sqrt(2);
+syt=kron(sy,eye(n));
 parfor i=1:length(mulist)
     mu=mulist(i);
     ham=Ht(mu,tlist,Delta,n);
@@ -17,6 +22,8 @@ parfor i=1:length(mulist)
 %     en(:,i)=sort(eigval(1:nv));
     eigval=eig(ham);
     en(:,i)=sort(eigval);
+    Pf(i)=sign(pfaffian_LTL(syt'*ham*syt));    
+    LE(i)=lyapunov(mu*ones(1,n),[tlist(1),tlist.',tlist(end)],Delta*ones(1,n+1));
 end
 figure;
 plot(mulist/Delta,en'/Delta,'k');
@@ -24,12 +31,43 @@ xlim([0,mulist(end)/Delta]);
 ylim([-2,2]);
 xlabel('\mu/\Delta');
 ylabel('E/\Delta');
-line([t/Delta*2,t/Delta*2],[-2,2],'Color','r');
+xline(t/Delta*2,'r');
 title(strcat('Energy [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),']'));
 fn_t=strcat('t',num2str(t));
 fn_Delta=strcat('D',num2str(Delta));
 fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar);
 saveas(gcf,strcat(fn,'.png'));
-save(strcat(fn,'_',num2str(mulist(end)),'.dat'),'en','-ascii');
+
+figure;
+plot(mulist/Delta,Pf,'k');
+xlim([0,mulist(end)/Delta]);
+ylim([-1.2,1.2]);
+xlabel('\mu/\Delta');
+ylabel('Pf');
+xline(t/Delta*2,'r');
+title(strcat('Pfaffian at [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),']'));
+fn_t=strcat('t',num2str(t));
+fn_Delta=strcat('D',num2str(Delta));
+fn_tVar=strcat('tVar',num2str(tVar));
+fn=strcat(fn_t,fn_Delta,fn_tVar);
+saveas(gcf,strcat(fn,'_Pf.png'));
+
+figure;
+plot(mulist/Delta,LE,'k');
+xlim([0,mulist(end)/Delta]);
+xlabel('\mu/\Delta');
+ylabel('LE');
+yline(0);
+xline(t/Delta*2,'r');
+lb=find(LE>0,1);
+ub=find(LE<0,1,'last');
+tqpt_lb=interp1(LE(lb-1:lb),mulist(lb-1:lb),0);
+tqpt_ub=interp1(LE(ub:ub+1),mulist(ub:ub+1),0);
+title(strcat('Lyapunov exponent [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),'] TQPT\in[',num2str(tqpt_lb/Delta),',',num2str(tqpt_ub/Delta),']'));
+fn_t=strcat('t',num2str(t));
+fn_Delta=strcat('D',num2str(Delta));
+fn_tVar=strcat('tVar',num2str(tVar));
+fn=strcat(fn_t,fn_Delta,fn_tVar);
+saveas(gcf,strcat(fn,'_LE.png'));
 end
