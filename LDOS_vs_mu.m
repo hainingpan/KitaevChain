@@ -11,8 +11,8 @@ lenenergy=length(energylist);
 
 % tVar=1;
 if length(tVar)==1
-%     tlist=t+tVar*randn(n-1,1);
-    tlist=t+tVar*(2*rand(n-1,1)-1);
+    tlist=t+tVar*randn(n-1,1);
+%     tlist=t+tVar*(2*rand(n-1,1)-1);
 end
 parfor i=1:lenmu
     for j=1:lenenergy
