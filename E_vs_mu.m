@@ -1,4 +1,4 @@
-function [en,Pf,LE]=E_vs_mu(t,Delta,tVar,tlist,n)
+function [en,Pf,LE]=E_vs_mu(t,Delta,phi,tVar,tlist,n)
 % t=1;
 % Delta=0.2;
 mulist=linspace(0,4*t,201);
@@ -14,15 +14,19 @@ Pf=zeros(1,length(mulist));
 LE=zeros(1,length(mulist));
 sy=[1,-1i;1,1i]/sqrt(2);
 syt=kron(sy,eye(n));
-parfor i=1:length(mulist)
+% hamiltonian=@(mu) Ht(mu,tlist,Delta,n);
+hamiltonian=@(mu) Ht_D(mu,tlist,Delta,phi,n);
+
+for i=1:length(mulist)
     mu=mulist(i);
-    ham=Ht(mu,tlist,Delta,n);
+%     ham=Ht(mu,tlist,Delta,n);  
+    ham=hamiltonian(mu);
 %     ham=H(mu,t,Delta,n);
 %     eigval=eigs(ham,nv,1e-40,'Tolerance',1e-5,'MaxIterations',20000);
 %     en(:,i)=sort(eigval(1:nv));
-    eigval=eig(ham);
+    eigval=eig(full(ham));
     en(:,i)=sort(eigval);
-    Pf(i)=sign(pfaffian_LTL(syt'*ham*syt));    
+    Pf(i)=sign(real(pfaffian_LTL(syt'*ham*syt)));    
     LE(i)=lyapunov(mu*ones(1,n),[tlist(1),tlist.',tlist(end)],Delta*ones(1,n+1));
 end
 figure;
@@ -34,7 +38,7 @@ ylabel('E/\Delta');
 xline(t/Delta*2,'r');
 title(strcat('Energy [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),']'));
 fn_t=strcat('t',num2str(t));
-fn_Delta=strcat('D',num2str(Delta));
+fn_Delta=strcat('D',num2str(Delta),'phi',num2str(phi));
 fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar);
 saveas(gcf,strcat(fn,'.png'));

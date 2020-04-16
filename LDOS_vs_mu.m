@@ -1,4 +1,4 @@
-function LDOS_vs_mu(t,Delta,tVar,tlist,n)
+function LDOS_vs_mu(t,Delta,phi,tVar,tlist,n)
 % t=1;
 % Delta=0.2;
 delta=1e-3;
@@ -8,7 +8,6 @@ energylist=linspace(-2*Delta,2*Delta,401);
 ldosmap=zeros(length(mulist),length(energylist),n);
 lenmu=length(mulist);
 lenenergy=length(energylist);
-
 % tVar=1;
 if length(tVar)==1
     tlist=t+tVar*randn(n-1,1);
@@ -18,12 +17,12 @@ parfor i=1:lenmu
     for j=1:lenenergy
     mu=mulist(i);
     energy=energylist(j);
-    ldosmap(i,j,:)=ldostall(mu,tlist,Delta,n,energy,delta);
+    ldosmap(i,j,:)=ldostall(mu,tlist,Delta,phi,n,energy,delta);
     end
 end
 
 
-[en,Pf,LE]=E_vs_mu(t,Delta,tVar,tlist,n);
+[en,Pf,LE]=E_vs_mu(t,Delta,phi,tVar,tlist,n);
 
 figure;
 LDOS_L=(squeeze(ldosmap(:,:,1)))';
@@ -36,7 +35,7 @@ xlim([0,mulist(end)/Delta]);
 ylim([-2,2]);
 title(strcat('LDOS on the left end [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),']'));
 fn_t=strcat('t',num2str(t));
-fn_Delta=strcat('D',num2str(Delta));
+fn_Delta=strcat('D',num2str(Delta),'phi',num2str(phi));
 fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar,'_LDOS_L');
 saveas(gcf,strcat(fn,'.png'));

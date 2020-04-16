@@ -15,7 +15,7 @@ LE=zeros(1,length(tlist));
 sy=[1,-1i;1,1i]/sqrt(2);
 syt=kron(sy,eye(n));
 % hamiltonian=@(t) Hmu(mulist,t,Delta,n);
-hamiltonian=@(t) Hmu_D(mulist,t,Delta,phi,n);
+hamiltonian=@(t) Hmu_D(mulist,t,Delta,pi/4,n);
 
 for i=1:length(tlist)
     t=tlist(i);
@@ -69,7 +69,7 @@ tqpt_lb=interp1(LE(lb-1:lb),tlist(lb-1:lb),0);
 tqpt_ub=interp1(LE(ub:ub+1),tlist(ub:ub+1),0);
 title(strcat('Lyapunov exponent at [\mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muVar/mu),'] TQPT\in[',num2str(tqpt_lb/Delta),',',num2str(tqpt_ub/Delta),']'));
 fn_mu=strcat('m',num2str(mu));
-fn_Delta=strcat('D',num2str(Delta),'phi',num2str(phi));
+fn_Delta=strcat('D',num2str(Delta));
 fn_muVar=strcat('muVar',num2str(muVar));
 fn=strcat(fn_mu,fn_Delta,fn_muVar);
 saveas(gcf,strcat(fn,'_LE.png'));

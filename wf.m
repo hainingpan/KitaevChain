@@ -1,5 +1,5 @@
-function amp=wf(mu,Delta,muVar,mulist,n)
-t=1;
+function amp=wf(mu,t,Delta,muVar,mulist,n)
+
 if length(mulist)==1
     mulist=mu+muVar*randn(n,1);
 end
