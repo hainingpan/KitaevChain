@@ -21,15 +21,21 @@ parfor i=1:lent
     end
 end
 
-[en,Pf,LE]=E_vs_t(mu,Delta,phi,muVar,mulist,n);
+[en,Pf,LE,tqpt_lb,tqpt_ub]=E_vs_t(mu,Delta,phi,muVar,mulist,n);
 figure;
 LDOS_L=(squeeze(ldosmap(:,:,1)))';
 surf(tlist/Delta,energylist/Delta,LDOS_L,'edgecolor','none');
 view(2);
 colorbar;colormap hot;
+if ~isempty(tqpt_lb)
+    xline(tqpt_lb/Delta,'b');
+end
+if ~isempty(tqpt_ub)
+    xline(tqpt_ub/Delta,'b');
+end
 xlabel('t/\Delta');
 ylabel('E/\Delta');
-title(strcat('LDOS on the left end [\mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muVar/mu),']'));
+title(strcat('LDOS on the left end \mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muVar/mu),',TQPT\in[',num2str(tqpt_lb/Delta),',',num2str(tqpt_ub/Delta),']'));
 fn_mu=strcat('m',num2str(mu));
 fn_Delta=strcat('D',num2str(Delta),'phi',num2str(phi));
 fn_muVar=strcat('muVar',num2str(muVar));
@@ -41,9 +47,15 @@ LDOS_M=(squeeze(ldosmap(:,:,floor(n/2))))';
 surf(tlist/Delta,energylist/Delta,LDOS_M,'edgecolor','none');
 view(2);
 colorbar;colormap hot;
+if ~isempty(tqpt_lb)
+    xline(tqpt_lb/Delta,'b');
+end
+if ~isempty(tqpt_ub)
+    xline(tqpt_ub/Delta,'b');
+end
 xlabel('t/\Delta');
 ylabel('E/\Delta');
-title(strcat('LDOS in the bulk [\mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muVar/mu),']'));
+title(strcat('LDOS in the bulk \mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muVar/mu),',TQPT\in[',num2str(tqpt_lb/Delta),',',num2str(tqpt_ub/Delta),']'));
 fn=strcat(fn_mu,fn_Delta,fn_muVar,'_LDOS_M');
 saveas(gcf,strcat(fn,'.png'));
 
@@ -52,9 +64,15 @@ LDOS_R=(squeeze(ldosmap(:,:,end)))';
 surf(tlist/Delta,energylist/Delta,LDOS_R,'edgecolor','none');
 view(2);
 colorbar;colormap hot;
+if ~isempty(tqpt_lb)
+    xline(tqpt_lb/Delta,'b');
+end
+if ~isempty(tqpt_ub)
+    xline(tqpt_ub/Delta,'b');
+end
 xlabel('t/\Delta');
 ylabel('E/\Delta');
-title(strcat('LDOS on the right end [\mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muVar/mu),']'));
+title(strcat('LDOS on the right end \mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muVar/mu),',TQPT\in[',num2str(tqpt_lb/Delta),',',num2str(tqpt_ub/Delta),']'));
 fn=strcat(fn_mu,fn_Delta,fn_muVar,'_LDOS_R');
 saveas(gcf,strcat(fn,'.png'));
 
@@ -63,9 +81,15 @@ DOS=(mean(ldosmap,3))';
 surf(tlist/Delta,energylist/Delta,DOS,'edgecolor','none');
 view(2);
 colorbar;colormap hot;
+if ~isempty(tqpt_lb)
+    xline(tqpt_lb/Delta,'b');
+end
+if ~isempty(tqpt_ub)
+    xline(tqpt_ub/Delta,'b');
+end
 xlabel('t/\Delta');
 ylabel('E/\Delta');
-title(strcat('DOS [\mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muVar/mu),']'));
+title(strcat('DOS \mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2str(muVar/mu),',TQPT\in[',num2str(tqpt_lb/Delta),',',num2str(tqpt_ub/Delta),']'));
 fn=strcat(fn_mu,fn_Delta,fn_muVar,'_DOS');
 saveas(gcf,strcat(fn,'.png'));
 

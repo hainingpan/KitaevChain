@@ -1,4 +1,4 @@
-function [en,Pf,LE]=E_vs_mu(t,Delta,phi,tVar,tlist,n)
+function [en,Pf,LE,tqpt_lb,tqpt_ub]=E_vs_mu(t,Delta,phi,tVar,tlist,n)
 % t=1;
 % Delta=0.2;
 mulist=linspace(0,4*t,201);
@@ -64,10 +64,18 @@ xlabel('\mu/\Delta');
 ylabel('LE');
 yline(0);
 xline(t/Delta*2,'r');
-lb=find(LE>0,1);
-ub=find(LE<0,1,'last');
-tqpt_lb=interp1(LE(lb-1:lb),mulist(lb-1:lb),0);
-tqpt_ub=interp1(LE(ub:ub+1),mulist(ub:ub+1),0);
+lb=min([find(LE>0,1),length(mulist)]);
+ub=min([find(LE<0,1,'last'),length(mulist)]);
+if lb<length(tlist)
+    tqpt_lb=interp1(LE(lb-1:lb),tlist(lb-1:lb),0);
+else
+    tqpt_lb=[];
+end
+if ub<length(tlist)
+    tqpt_ub=interp1(LE(ub:ub+1),tlist(ub:ub+1),0);
+else
+    tqpt_ub=[];
+end
 title(strcat('Lyapunov exponent [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),'] TQPT\in[',num2str(tqpt_lb/Delta),',',num2str(tqpt_ub/Delta),']'));
 fn_t=strcat('t',num2str(t));
 fn_Delta=strcat('D',num2str(Delta));
