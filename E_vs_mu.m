@@ -52,7 +52,7 @@ ylabel('Pf');
 xline(t/Delta*2,'r');
 title(strcat('Pfaffian at [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),']'));
 fn_t=strcat('t',num2str(t));
-fn_Delta=strcat('D',num2str(Delta));
+fn_Delta=strcat('D',num2str(Delta),'phi',num2str(phi));
 fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar);
 saveas(gcf,strcat(fn,'_Pf.png'));
@@ -78,7 +78,7 @@ else
 end
 title(strcat('Lyapunov exponent [t/\Delta=',num2str(t/Delta),',\sigma_t/t=',num2str(tVar/t),'] TQPT\in[',num2str(tqpt_lb/Delta),',',num2str(tqpt_ub/Delta),']'));
 fn_t=strcat('t',num2str(t));
-fn_Delta=strcat('D',num2str(Delta));
+fn_Delta=strcat('D',num2str(Delta),'phi',num2str(phi));
 fn_tVar=strcat('tVar',num2str(tVar));
 fn=strcat(fn_t,fn_Delta,fn_tVar);
 saveas(gcf,strcat(fn,'_LE.png'));
