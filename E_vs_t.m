@@ -1,7 +1,7 @@
 function [en,Pf,LE,tqpt_lb,tqpt_ub]=E_vs_t(mu,Delta,phi,muVar,mulist,n)
 % mu=1;
 % Delta=0.2;
-tlist=linspace(0,2*mu,201);
+tlist=linspace(0,mu,201);
 % n=100;
 % nv=10;
 % nv=2*n;

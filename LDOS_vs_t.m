@@ -2,7 +2,7 @@ function LDOS_vs_t(mu,Delta,phi,muVar,mulist,n)
 % mu=1;
 % Delta=.2;
 delta=1e-3;
-tlist=linspace(0,2*mu,401);
+tlist=linspace(0,mu,401);
 energylist=linspace(-mu,mu,401);
 % n=100;
 ldosmap=zeros(length(tlist),length(energylist),n);
