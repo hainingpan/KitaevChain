@@ -1,7 +1,11 @@
 function [en,Pf,LE,tqpt_lb,tqpt_ub]=E_vs_t(mu,Delta,phi,muVar,mulist,n)
 % mu=1;
 % Delta=0.2;
-tlist=linspace(0,mu,201);
+if muVar<2
+    tlist=linspace(0,mu,401);
+else
+    tlist=linspace(0,8*mu,8*401);
+end
 % n=100;
 % nv=10;
 % nv=2*n;
@@ -39,7 +43,8 @@ title(strcat('Energy at [\mu/\Delta=',num2str(mu/Delta),',\sigma_\mu/\mu=',num2s
 fn_mu=strcat('m',num2str(mu));
 fn_Delta=strcat('D',num2str(Delta),'phi',num2str(phi));
 fn_muVar=strcat('muVar',num2str(muVar));
-fn=strcat(fn_mu,fn_Delta,fn_muVar);
+fn_L=strcat('L',num2str(n));
+fn=strcat(fn_mu,fn_Delta,fn_muVar,fn_L);
 saveas(gcf,strcat(fn,'.png'));
 
 figure;
